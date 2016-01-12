@@ -1,0 +1,71 @@
+
+ALTER QMGR DESCR('Qmgr Script Date: 06/10/2014 At 21:28:25')
+ALTER QMGR MONQ(LOW) MONCHL(LOW) MONACLS(QMGR)
+
+DEFINE QL(GATEWAY_TEMPLATE_QUEUE) -
+       DESCR('GATEWAY MODEL QUEUE') -
+       DEFPSIST(YES) -
+       BOTHRESH(0) -
+       DEFPRTY(0) -
+       MAXDEPTH(25000) -
+       MAXMSGL(104857600) -
+       QDEPTHLO(1) -
+       QDEPTHHI(10) -
+       QDPMAXEV(ENABLED) -
+       QDPHIEV(ENABLED) -
+       QDPLOEV(DISABLED) -
+       DEFBIND(OPEN) -
+       CLUSNL(' ') -
+       REPLACE
+
+DEFINE QL('MFT_MQFTE_CONCUR_XB60') -
+       DESCR('LOCAL QUEUE FOR CONCUR transfer') -
+       DEFPSIST(YES) -
+       BOQNAME(MFT_MQFTE_CONCUR_XB60_BACKOUT) -
+       BOTHRESH(3) -
+       DEFPRTY(0) -
+       MAXDEPTH(25000) -
+       MAXMSGL(104857600) -
+       QDEPTHLO(1) -
+       QDEPTHHI(10) -
+       QDPMAXEV(ENABLED) -
+       QDPHIEV(ENABLED) -
+       QDPLOEV(DISABLED) -
+       DEFBIND(OPEN) -
+       REPLACE
+
+DEFINE QL('MFT_MQFTE_CONCUR_XB60_BACKOUT') -
+       DESCR('BACKOUT QUEUE FOR CONCUR transfer') -
+       DEFPSIST(YES) -
+       DEFPRTY(0) -
+       MAXDEPTH(25000) -
+       MAXMSGL(104857600) -
+       QDEPTHLO(1) -
+       QDEPTHHI(10) -
+       QDPMAXEV(ENABLED) -
+       QDPHIEV(ENABLED) -
+       QDPLOEV(DISABLED) -
+       DEFBIND(OPEN) -
+       REPLACE
+
+DEFINE QA('Employee_ToConcur_F0003_v1.OUTQ') -
+       LIKE(GATEWAY_TEMPLATE_QUEUE_ALIAS) -
+       DESCR('Employee details to Concur') -
+       DEFPSIST(YES) -
+       TARGQ('MFT_MQFTE_CONCUR_XB60') -
+       DEFPRTY(0) -
+       DEFBIND(NOTFIXED) -
+       CLUSTER(C01MSEXT01_UTF8) -
+       REPLACE
+
+DEFINE QA('AccountPosting_FromConcur_F0008_v1.INQ') -
+       LIKE(GATEWAY_TEMPLATE_QUEUE_ALIAS) -
+       DESCR('Accounting details from Concur to Concure adapter') -
+       DEFPSIST(YES) -
+       TARGQ('AccountPosting_FromConcur_F0008_v1.INQ') -
+       DEFPRTY(0) -
+       DEFBIND(NOTFIXED) -
+       CLUSTER(C01MSEXT01_UTF8) -
+       REPLACE
+
+END

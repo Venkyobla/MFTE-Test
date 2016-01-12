@@ -1,0 +1,16 @@
+ALTER QMGR DESCR('Qmgr Script Date: 4/17/2014 At 12:21:36 PM')
+ALTER QMGR MONQ(LOW) MONCHL(LOW) MONACLS(QMGR)
+
+CLEAR QL('AccountPosting_FromConcur_F0008_v1.INQ')
+DELETE QL('AccountPosting_FromConcur_F0008_v1.INQ')
+
+DELETE QALIAS('AccountPosting_FromConcur_F0008_v1.OUTQ')
+
+CLEAR QL('Employee_ToConcur_F0003_v1.INQ')
+DELETE QL('Employee_ToConcur_F0003_v1.INQ')
+
+DELETE SUB('TnE_I0826_Employee_Concur')
+
+DELETE SUB('IS_AUDIT_CONSUMER_SUB_CONCUR_ADAPTER')
+
+END
