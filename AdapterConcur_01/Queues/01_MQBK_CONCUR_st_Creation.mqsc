@@ -1,0 +1,48 @@
+DEFINE QL(TE_EVENTBUS_TEMPLATE_QUEUE) -
+       DESCR('BROKER MODEL QUEUE FOR 15MB MESSAGES') -
+       DEFPSIST(YES) -
+       BOTHRESH(0) -
+       DEFPRTY(0) -
+       MAXDEPTH(10000) -
+       MAXMSGL(15485760) -
+       QDEPTHLO(1) -
+       QDEPTHHI(10) -
+       QDPMAXEV(ENABLED) -
+       QDPHIEV(ENABLED) -
+       QDPLOEV(DISABLED) -
+       DEFBIND(NOTFIXED) -
+       CLUSNL(' ') -
+       REPLACE
+
+DEFINE QL('AccountPosting_FromConcur_F0008_v1.INQ') -
+       LIKE(TE_EVENTBUS_TEMPLATE_QUEUE) -
+       DESCR('I0828 - Account details from Concur to Concur adapter') -
+       BOQNAME('COMMON.BACKOUTQ')  -
+       DEFPSIST(YES) -
+       DEFBIND(NOTFIXED) -
+       CLUSTER('C01MSEXT01_UTF8') -
+       REPLACE
+
+DEFINE QALIAS('AccountPosting_FromConcur_F0008_v1.OUTQ') -
+       DESCR('ALIAS QUEUE I0828 CONCUR INBOUND') -
+       DEFPSIST(YES) -
+       TARGTYPE(QUEUE) -
+       TARGET('I0828_EventBus_AccountPosting_F0007_v1.INQ') -
+       DEFBIND(NOTFIXED) -
+       CLUSNL('MSINTERNAL') -
+       REPLACE
+
+DEFINE QL('Employee_ToConcur_F0003_v1.INQ') -
+       LIKE(TE_EVENTBUS_TEMPLATE_QUEUE) -
+       DESCR('I0828 - Employee details from eventbus to Concur') -
+       BOQNAME('COMMON.BACKOUTQ')  -
+       DEFPSIST(YES) -
+       DEFBIND(NOTFIXED) -
+       CLUSNL(MSINTERNAL) -
+       REPLACE
+
+Define Sub ('TnE_I0826_Employee_Concur') TOPICSTR('I0826') DEST('Employee_ToConcur_F0003_v1.INQ') REPLACE
+
+Define Sub ('IS_AUDIT_CONSUMER_SUB_CONCUR_ADAPTER') TOPICSTR('$SYS/Broker/$qmgr/Monitoring/AdapterConcur_01/#') DEST('WMB.AUDIT_EVENT_QUEUE') REPLACE
+
+END
