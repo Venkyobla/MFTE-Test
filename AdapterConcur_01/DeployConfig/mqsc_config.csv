@@ -1,0 +1,9 @@
+MQscript,Qmanager
+01_MQBK_CONCUR_intb_Reversion.mqsc,C1MSBK01
+01_MQBK_CONCUR_intb_Reversion.mqsc,C1MSBK02
+01_MQBK_CONCUR_intb_Creation.mqsc,C1MSBK01
+01_MQBK_CONCUR_intb_Creation.mqsc,C1MSBK02
+01_MQBK_CONCUR_st_Reversion.mqsc,T2MSBK01
+01_MQBK_CONCUR_st_Reversion.mqsc,T2MSBK02
+01_MQBK_CONCUR_st_Creation.mqsc,T2MSBK01
+01_MQBK_CONCUR_st_Creation.mqsc,T2MSBK02
